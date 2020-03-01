@@ -1,6 +1,9 @@
 .App {
 
 }
+.container {
+  display: flex;
+}
 .team {
   display: inline-block;
   margin-left: 10px;

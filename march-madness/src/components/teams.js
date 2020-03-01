@@ -54,18 +54,20 @@ const Teams = () => {
     }
 
     return (
-        <div>
-            {list.map(team => (
-                <div key={team.id}>
-                    <div>
-                        <button className='team' onClick={() => handleClick(team.id)}>Enter Stats</button>
-                        <p className='team teamName'>{team.name}({team.wins}-{team.loses})</p>
+        <div className='container'>
+            <div>
+                {list.map(team => (
+                    <div key={team.id}>
+                        <div>
+                            <button className='team' onClick={() => handleClick(team.id)}>Enter Stats</button>
+                            <p className='team teamName'>{team.name}({team.wins}-{team.loses})</p>
+                        </div>
+                        <div style={{display: toggle && teamId === team.id ? 'block' : 'none'}}>
+                            <Stats name={team.name} click={handleClick}/>
+                        </div>
                     </div>
-                    <div style={{display: toggle && teamId === team.id ? 'block' : 'none'}}>
-                        <Stats name={team.name} click={handleClick}/>
-                    </div>
-                </div>
-            ))}
+                ))}
+            </div>
             <TeamStats toggle={toggle}/>
         </div>
     )

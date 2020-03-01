@@ -53,6 +53,7 @@ const Stats = (props) => {
                 />
                 <input
                     type='number'
+                    step='0.1'
                     name='adjO'
                     value={adjO}
                     placeholder='AdjO'
@@ -61,6 +62,7 @@ const Stats = (props) => {
                 />
                 <input
                     type='number'
+                    step='0.1'
                     name='adjD'
                     placeholder='AdjD'
                     value={adjD}
@@ -69,6 +71,7 @@ const Stats = (props) => {
                 />
                 <input
                     type='number'
+                    step='0.1'
                     name='adjT'
                     placeholder='AdjT'
                     value={adjT}
