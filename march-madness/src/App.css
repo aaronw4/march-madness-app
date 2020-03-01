@@ -8,6 +8,11 @@
   display: inline-block;
   margin-left: 10px;
 }
+.delete{
+  color: white;
+  background: red;
+  border: 1 black solid;
+}
 .input {
   margin-left: 10px;
 }

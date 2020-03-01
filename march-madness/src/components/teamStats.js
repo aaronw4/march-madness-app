@@ -17,16 +17,19 @@ const TeamStats = (props) => {
                 .catch(err => console.log(err))
         }
         fetchData()
-    },[props.toggle]);
-
-    // useEffect(() => {
-    //     function fetchData() {
-
-    //     }
-    // });
+    },[]);
 
     function addTeam(team) {
         setMatchUp([...matchUp, team]);
+    }
+
+    function deleteTeam(id) {        
+        axios
+            .delete(`https://arw-march-madness.herokuapp.com/teams/${id}`)
+            .then(res => {
+                props.click();
+            })
+            .catch(err => console.log(err));        
     }
 
     function calculateOdds() {
@@ -46,7 +49,6 @@ const TeamStats = (props) => {
 
             const odds1 = 100*((pyth1-pyth1*pyth2)/(pyth1+pyth2-2*pyth1*pyth2));
             const odds2 = 100*((pyth2-pyth1*pyth2)/(pyth1+pyth2-2*pyth1*pyth2));
-
 
             setGames([
                 ...games,
@@ -76,6 +78,7 @@ const TeamStats = (props) => {
                     <div key={team.id}>
                         <button className='team'  onClick={() => addTeam(team)}>Select</button>
                         <p className='team' >{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
+                        <button className='team delete' onClick={() => deleteTeam(team.id)}>X</button>
                     </div>
                 ))}
             </div>
