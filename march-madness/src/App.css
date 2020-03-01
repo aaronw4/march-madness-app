@@ -11,3 +11,15 @@
 .input {
   margin-left: 10px;
 }
+.matchUp {
+  text-align: center;
+}
+.buttonCont {
+  border-bottom: 2px black solid;
+}
+.submit {
+  margin: 10px 150px;
+}
+.gamesCont {
+  margin-left: 20px;
+}
