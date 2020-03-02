@@ -7,7 +7,8 @@ const Teams = () => {
     const [teams, setTeams] = useState([]);
     const [list, setList] = useState([]);
     const [toggle, setToggle] = useState(false);
-    const [teamId, setTeamId] = useState('')
+    const [teamId, setTeamId] = useState('');
+    const [avePoints, setAvePoints] = useState();
 
     useEffect(() => {
         function fetchData() {
@@ -23,6 +24,20 @@ const Teams = () => {
     },[]);
 
     useEffect(() => {
+        function total() {
+
+        let gamesArray = teams.map(team => (team.games.played));
+        let pointsArray = teams.map(team => (team.points.for));
+        let games = gamesArray.reduce((total, number) => total + number, 0);
+        let points = pointsArray.reduce((total, number) => total + number, 0);
+        let avePointsPerGame = points/games;  
+
+        setAvePoints(avePointsPerGame);    
+        }
+        total();
+    },[teams]);
+
+    useEffect(() => {
         function newList() {
             let list = teams.map(team => ({
                 id: team.team.id,
@@ -30,7 +45,7 @@ const Teams = () => {
                 wins: team.games.win.total,
                 loses: team.games.lose.total
             }));
-    
+            
             let orderedList = list.sort(function(a,b) {
                 var name1 = a.name;
                 var name2 = b.name;
@@ -42,7 +57,7 @@ const Teams = () => {
                 }
                 return 0;
             });
-
+            
             setList(orderedList);
         } 
         newList();
@@ -52,10 +67,11 @@ const Teams = () => {
         setToggle(!toggle);
         setTeamId(id);
     }
-
+    
     return (
         <div className='container'>
             <div>
+            <p>Average Points/Game: {avePoints}</p>
                 {list.map(team => (
                     <div key={team.id}>
                         <div>
@@ -63,12 +79,12 @@ const Teams = () => {
                             <p className='team teamName'>{team.name}({team.wins}-{team.loses})</p>
                         </div>
                         <div style={{display: toggle && teamId === team.id ? 'block' : 'none'}}>
-                            <Stats click={handleClick()}/>
+                            <Stats click={handleClick}/>
                         </div>
                     </div>
                 ))}
             </div>
-            <TeamStats toggle={toggle}/>
+            <TeamStats click={handleClick} total={avePoints}/>
         </div>
     )
 }
