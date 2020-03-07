@@ -7,19 +7,31 @@ const TeamStats = (props) => {
     const [games, setGames] = useState([]);
     const [adjOave, setAdjOave] = useState();
     const [adjTAve, setAdjTAve] = useState();
+    const [update, setUpdate] = useState(0);
 
     useEffect(() => {
         function fetchData() {
             axios
                 .get('https://arw-march-madness.herokuapp.com/teams')
                 .then(res => {
-                    console.log(res.data);
                     setTeams(res.data);
                 })
                 .catch(err => console.log(err))
         }
         fetchData()
     },[props.count]);
+
+    useEffect(() => {
+        function fetchData() {
+            axios
+                .get('https://arw-march-madness.herokuapp.com/matchups')
+                .then(res => {
+                    setGames(res.data);
+                })
+                .catch(err => console.log(err))
+        }
+        fetchData();
+    },[update])
 
     useEffect(() => {
         function averages() {
@@ -74,26 +86,40 @@ const TeamStats = (props) => {
             const spread = score1 - score2;
             const total = score1 + score2;
 
-            setGames([
-                ...games,
-            {
-                name1: name1,
-                pyth1: pyth1,
-                odds1: odds1,
-                score1: score1,
-                name2: name2,
-                pyth2: pyth2,
-                odds2: odds2,
-                score2: score2,
-                spread: spread,
-                total: total
-            }]);
+            axios
+                .post('https://arw-march-madness.herokuapp.com/matchups', {
+                    TeamName1: name1,
+                    TeamName2: name2,
+                    Pyth1: pyth1,
+                    Pyth2: pyth2,
+                    Odds1: odds1,
+                    Odds2: odds2,
+                    Score1: score1,
+                    Score2: score2,
+                    Spread: spread,
+                    Total: total
+                })
+                .then(res => {
+                    console.log(res);
+                    setUpdate(update + 1);
+                })
+                .catch(err => console.log(err));        
 
             setMatchUp([]);
         }
     }
 
-    function decimals (number) {
+    function deleteMatchup(id) {
+        axios
+            .delete(`https://arw-march-madness.herokuapp.com/matchups/${id}`)
+            .then(res => {
+                console.log(res);
+                setUpdate(update + 1);
+            })
+            .catch(err => console.log(err)); 
+    }
+
+    function decimals(number) {
         let decimal = number.toFixed(2);
         return decimal;
     }
@@ -117,30 +143,31 @@ const TeamStats = (props) => {
             </div>
             <div className='gamesCont'>
                 {games.map(game => (
-                    <table>
+                    <table key={game.id}>
+                        <button className='delete' onClick={() => deleteMatchup(game.id)}>X</button>
                         <tr>
                             <th colSpan='2'>Team Name</th>
-                            <td colSpan='2'>{game.name1}</td>
-                            <td colSpan='2'>{game.name2}</td>
+                            <td colSpan='2'>{game.TeamName1}</td>
+                            <td colSpan='2'>{game.TeamName2}</td>
                         </tr>
                         <tr>
                             <th colSpan='2'>Pyth</th>
-                            <td colSpan='2'>{decimals(game.pyth1)}</td>
-                            <td colSpan='2'>{decimals(game.pyth2)}</td>
+                            <td colSpan='2'>{decimals(game.Pyth1)}</td>
+                            <td colSpan='2'>{decimals(game.Pyth2)}</td>
                         </tr>
                         <tr>
                             <th colSpan='2'>Odds</th>
-                            <td colSpan='2'>{decimals(game.odds1)}</td>
-                            <td colSpan='2'>{decimals(game.odds2)}</td>
+                            <td colSpan='2'>{decimals(game.Odds1)}</td>
+                            <td colSpan='2'>{decimals(game.Odds2)}</td>
                         </tr>
                         <tr>
                             <th colSpan='2'>Score</th>
-                            <td colSpan='2'>{decimals(game.score1)}</td>
-                            <td colSpan='2'>{decimals(game.score2)}</td>
+                            <td colSpan='2'>{decimals(game.Score1)}</td>
+                            <td colSpan='2'>{decimals(game.Score2)}</td>
                         </tr>
                         <tr>
-                            <td colSpan='3'>Spread: {decimals(game.spread)}</td>
-                            <td colSpan='3'>Total: {decimals(game.total)}</td>
+                            <td colSpan='3'>Spread: {decimals(game.Spread)}</td>
+                            <td colSpan='3'>Total: {decimals(game.Total)}</td>
                         </tr>
                     </table>
                 ))}
