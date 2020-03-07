@@ -92,6 +92,11 @@ const TeamStats = (props) => {
         }
     }
 
+    function decimals (number) {
+        let decimal = number.toFixed(2);
+        return decimal;
+    }
+
     return (
         <div className='container'>
             <div>
@@ -111,11 +116,34 @@ const TeamStats = (props) => {
             </div>
             <div className='gamesCont'>
                 {games.map(game => (
-                    <div>
-                        <p>{game.name1} Pyth: {game.pyth1} Odds: {game.odds1} Score: {game.score1} Spead: {game.spread}</p>
-                        <p>{game.name2} Pyth: {game.pyth2} Odds: {game.odds2} Score: {game.score2} Total: {game.total}</p>
+                    <table>
+                        <tr>
+                            <th>Team Name</th>
+                            <td>{game.name1}</td>
+                            <td>{game.name2}</td>
+                        </tr>
+                        <tr>
+                            <th>Pyth</th>
+                            <td>{decimals(game.pyth1)}</td>
+                            <td>{decimals(game.pyth2)}</td>
+                        </tr>
+                        <tr>
+                            <th>Odds</th>
+                            <td>{decimals(game.odds1)}</td>
+                            <td>{decimals(game.odds2)}</td>
+                        </tr>
+                        <tr>
+                            <th>Score</th>
+                            <td>{decimals(game.score1)}</td>
+                            <td>{decimals(game.score2)}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Spread: {decimals(game.spread)}</td>
+                            <td>Total: {decimals(game.total)}</td>
+                        </tr>
                         <p></p>
-                    </div>
+                    </table>
                 ))}
             </div>
         </div>
