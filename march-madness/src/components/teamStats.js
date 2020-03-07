@@ -5,6 +5,8 @@ const TeamStats = (props) => {
     const [teams, setTeams] = useState([]);
     const [matchUp, setMatchUp] = useState([]);
     const [games, setGames] = useState([]);
+    const [adjOave, setAdjOave] = useState();
+    const [adjTAve, setAdjTAve] = useState();
 
     useEffect(() => {
         function fetchData() {
@@ -18,6 +20,21 @@ const TeamStats = (props) => {
         }
         fetchData()
     },[]);
+
+    useEffect(() => {
+        function averages() {
+            let adjTArray = teams.map(team => team.AdjT);
+            let adjTtotal = adjTArray.reduce((total, number) => total + number, 0);
+            let adjTave = adjTtotal / teams.length;
+            setAdjTAve(adjTave);
+
+            let adjOArray = teams.map(team => team.AdjO);
+            let adjOtotal = adjOArray.reduce((total, number) => total + number, 0);
+            let adjOave = adjOtotal / teams.length;
+            setAdjOave(adjOave);
+        }
+        averages();
+    },[teams]);
 
     function addTeam(team) {
         setMatchUp([...matchUp, team]);
@@ -50,15 +67,25 @@ const TeamStats = (props) => {
             const odds1 = 100*((pyth1-pyth1*pyth2)/(pyth1+pyth2-2*pyth1*pyth2));
             const odds2 = 100*((pyth2-pyth1*pyth2)/(pyth1+pyth2-2*pyth1*pyth2));
 
+            const possPerGame = AdjT1 * AdjT2 / adjTAve;
+            const score1 = AdjO1 * AdjD2 * possPerGame / adjOave / 100;
+            const score2 = AdjO2 * AdjD1 * possPerGame / adjOave / 100;
+            const spread = score1 - score2;
+            const total = score1 + score2;
+
             setGames([
                 ...games,
             {
                 name1: name1,
                 pyth1: pyth1,
                 odds1: odds1,
+                score1: score1,
                 name2: name2,
                 pyth2: pyth2,
-                odds2: odds2
+                odds2: odds2,
+                score2: score2,
+                spread: spread,
+                total: total
             }]);
 
             setMatchUp([]);
@@ -85,8 +112,8 @@ const TeamStats = (props) => {
             <div className='gamesCont'>
                 {games.map(game => (
                     <div>
-                        <p>{game.name1} Pyth:{game.pyth1} Odds:{game.odds1}</p>
-                        <p>{game.name2} Pyth:{game.pyth2} Odds:{game.odds2}</p>
+                        <p>{game.name1} Pyth: {game.pyth1} Odds: {game.odds1} Score: {game.score1} Spead: {game.spread}</p>
+                        <p>{game.name2} Pyth: {game.pyth2} Odds: {game.odds2} Score: {game.score2} Total: {game.total}</p>
                         <p></p>
                     </div>
                 ))}
