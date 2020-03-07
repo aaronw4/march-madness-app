@@ -118,31 +118,29 @@ const TeamStats = (props) => {
                 {games.map(game => (
                     <table>
                         <tr>
-                            <th>Team Name</th>
-                            <td>{game.name1}</td>
-                            <td>{game.name2}</td>
+                            <th colSpan='2'>Team Name</th>
+                            <td colSpan='2'>{game.name1}</td>
+                            <td colSpan='2'>{game.name2}</td>
                         </tr>
                         <tr>
-                            <th>Pyth</th>
-                            <td>{decimals(game.pyth1)}</td>
-                            <td>{decimals(game.pyth2)}</td>
+                            <th colSpan='2'>Pyth</th>
+                            <td colSpan='2'>{decimals(game.pyth1)}</td>
+                            <td colSpan='2'>{decimals(game.pyth2)}</td>
                         </tr>
                         <tr>
-                            <th>Odds</th>
-                            <td>{decimals(game.odds1)}</td>
-                            <td>{decimals(game.odds2)}</td>
+                            <th colSpan='2'>Odds</th>
+                            <td colSpan='2'>{decimals(game.odds1)}</td>
+                            <td colSpan='2'>{decimals(game.odds2)}</td>
                         </tr>
                         <tr>
-                            <th>Score</th>
-                            <td>{decimals(game.score1)}</td>
-                            <td>{decimals(game.score2)}</td>
+                            <th colSpan='2'>Score</th>
+                            <td colSpan='2'>{decimals(game.score1)}</td>
+                            <td colSpan='2'>{decimals(game.score2)}</td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td>Spread: {decimals(game.spread)}</td>
-                            <td>Total: {decimals(game.total)}</td>
+                            <td colSpan='3'>Spread: {decimals(game.spread)}</td>
+                            <td colSpan='3'>Total: {decimals(game.total)}</td>
                         </tr>
-                        <p></p>
                     </table>
                 ))}
             </div>
