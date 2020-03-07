@@ -19,7 +19,7 @@ const TeamStats = (props) => {
                 .catch(err => console.log(err))
         }
         fetchData()
-    },[]);
+    },[props.count]);
 
     useEffect(() => {
         function averages() {
@@ -44,7 +44,8 @@ const TeamStats = (props) => {
         axios
             .delete(`https://arw-march-madness.herokuapp.com/teams/${id}`)
             .then(res => {
-                props.click();
+                console.log(res);
+                props.setCount(props.count + 1);
             })
             .catch(err => console.log(err));        
     }

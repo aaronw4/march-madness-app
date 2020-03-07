@@ -36,6 +36,7 @@ const Stats = (props) => {
             .then(res => {
                 console.log(res);
                 props.click();
+                props.setCount(props.count + 1);
             })
             .catch(err => {console.log(err)
             })

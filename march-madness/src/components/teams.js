@@ -9,6 +9,7 @@ const Teams = () => {
     const [toggle, setToggle] = useState(false);
     const [teamId, setTeamId] = useState('');
     const [avePoints, setAvePoints] = useState();
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
         function fetchData() {
@@ -79,12 +80,12 @@ const Teams = () => {
                             <p className='team teamName'>{team.name}({team.wins}-{team.loses})</p>
                         </div>
                         <div style={{display: toggle && teamId === team.id ? 'block' : 'none'}}>
-                            <Stats click={handleClick} name={team.name}/>
+                            <Stats click={handleClick} name={team.name} setCount={setCount} count={count}/>
                         </div>
                     </div>
                 ))}
             </div>
-            <TeamStats click={handleClick} total={avePoints}/>
+            <TeamStats total={avePoints} setCount={setCount} count={count}/>
         </div>
     )
 }
