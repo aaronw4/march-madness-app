@@ -3,11 +3,14 @@ import axios from 'axios';
 
 const TeamStats = (props) => {
     const [teams, setTeams] = useState([]);
+    const [orderedTeams, setOrderedTeams] = useState([]);
     const [matchUp, setMatchUp] = useState([]);
     const [games, setGames] = useState([]);
     const [adjOave, setAdjOave] = useState();
     const [adjTAve, setAdjTAve] = useState();
     const [update, setUpdate] = useState(0);
+    const [toggle, setToggle] = useState(false);
+    const [gameId, setGameId] = useState('');
 
     useEffect(() => {
         function fetchData() {
@@ -20,6 +23,33 @@ const TeamStats = (props) => {
         }
         fetchData()
     },[props.count]);
+
+    useEffect(() => {
+        function newList() {
+            let list = teams.map(team => ({
+                id: team.id,
+                TeamName: team.TeamName,
+                AdjO: team.AdjO,
+                AdjD: team.AdjD,
+                AdjT: team.AdjT
+            }));
+
+            let orderedList = list.sort(function(a,b) {
+                var name1 = a.TeamName;
+                var name2 = b.TeamName;
+                if (name1 < name2) {
+                    return -1
+                }
+                if (name1 > name2) {
+                    return +1
+                }
+                return 0;
+            });
+
+            setOrderedTeams(orderedList);
+        }
+        newList();
+    },[teams]);
 
     useEffect(() => {
         function fetchData() {
@@ -124,6 +154,11 @@ const TeamStats = (props) => {
         return decimal;
     }
 
+    function handleClick(id) {
+        setToggle(!toggle);
+        setGameId(id);
+    }
+
     return (
         <div className='container'>
             <div>
@@ -133,7 +168,7 @@ const TeamStats = (props) => {
                     </div>
                 ))}
                 {matchUp.length === 2 ? <div className='buttonCont'><button className='submit' onClick={() => calculateOdds()}>Submit</button></div> : null}
-                {teams.map(team => (
+                {orderedTeams.map(team => (
                     <div key={team.id}>
                         <button className='team'  onClick={() => addTeam(team)}>Select</button>
                         <p className='team' >{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
@@ -143,33 +178,49 @@ const TeamStats = (props) => {
             </div>
             <div className='gamesCont'>
                 {games.map(game => (
-                    <table key={game.id}>
-                        <button className='delete' onClick={() => deleteMatchup(game.id)}>X</button>
-                        <tr>
-                            <th colSpan='2'>Team Name</th>
-                            <td colSpan='2'>{game.TeamName1}</td>
-                            <td colSpan='2'>{game.TeamName2}</td>
-                        </tr>
-                        <tr>
-                            <th colSpan='2'>Pyth</th>
-                            <td colSpan='2'>{decimals(game.Pyth1)}</td>
-                            <td colSpan='2'>{decimals(game.Pyth2)}</td>
-                        </tr>
-                        <tr>
-                            <th colSpan='2'>Odds</th>
-                            <td colSpan='2'>{decimals(game.Odds1)}</td>
-                            <td colSpan='2'>{decimals(game.Odds2)}</td>
-                        </tr>
-                        <tr>
-                            <th colSpan='2'>Score</th>
-                            <td colSpan='2'>{decimals(game.Score1)}</td>
-                            <td colSpan='2'>{decimals(game.Score2)}</td>
-                        </tr>
-                        <tr>
-                            <td colSpan='3'>Spread: {decimals(game.Spread)}</td>
-                            <td colSpan='3'>Total: {decimals(game.Total)}</td>
-                        </tr>
-                    </table>
+                    toggle === false && gameId === game.id ?  
+                    <div>
+                        <button className='delete deleteMatchup' onClick={() => deleteMatchup(game.id)}>X</button>
+                        <table key={game.id}> 
+                                <button onClick={() => handleClick(game.id)}>Close</button>
+                            <tr>
+                                <th colSpan='2'>Team Name</th>
+                                <td colSpan='2'>{game.TeamName1}</td>
+                                <td colSpan='2'>{game.TeamName2}</td>
+                            </tr>
+                            <tr>
+                                <th colSpan='2'>Pyth</th>
+                                <td colSpan='2'>{decimals(game.Pyth1)}</td>
+                                <td colSpan='2'>{decimals(game.Pyth2)}</td>
+                            </tr>
+                            <tr>
+                                <th colSpan='2'>Odds</th>
+                                <td colSpan='2'>{decimals(game.Odds1)}</td>
+                                <td colSpan='2'>{decimals(game.Odds2)}</td>
+                            </tr>
+                            <tr>
+                                <th colSpan='2'>Score</th>
+                                <td colSpan='2'>{decimals(game.Score1)}</td>
+                                <td colSpan='2'>{decimals(game.Score2)}</td>
+                            </tr>
+                            <tr>
+                                <td colSpan='3'>Spread: {decimals(game.Spread)}</td>
+                                <td colSpan='3'>Total: {decimals(game.Total)}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    :
+                    <div>
+                        <button className='delete deleteMatchup' onClick={() => deleteMatchup(game.id)}>X</button>
+                        <table key={game.id}>
+                            <button onClick={() => handleClick(game.id)}>Open</button>
+                            <tr>
+                                <th colSpan='2'>Team Name</th>
+                                <td colSpan='2'>{game.TeamName1}</td>
+                                <td colSpan='2'>{game.TeamName2}</td>
+                            </tr>
+                        </table>
+                    </div>
                 ))}
             </div>
         </div>
