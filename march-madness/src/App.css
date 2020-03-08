@@ -28,6 +28,10 @@
 .gamesCont {
   margin-left: 20px;
 }
+.deleteMatchup {
+  position: relative;
+  float: right;
+}
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
