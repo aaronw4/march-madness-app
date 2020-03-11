@@ -65,12 +65,12 @@ const TeamStats = (props) => {
 
     useEffect(() => {
         function averages() {
-            let adjTArray = teams.map(team => team.AdjT);
+            let adjTArray = teams.map(team => Number(team.AdjT));
             let adjTtotal = adjTArray.reduce((total, number) => total + number, 0);
             let adjTave = adjTtotal / teams.length;
             setAdjTAve(adjTave);
 
-            let adjOArray = teams.map(team => team.AdjO);
+            let adjOArray = teams.map(team => Number(team.AdjO));
             let adjOtotal = adjOArray.reduce((total, number) => total + number, 0);
             let adjOave = adjOtotal / teams.length;
             setAdjOave(adjOave);
@@ -150,8 +150,9 @@ const TeamStats = (props) => {
     }
 
     function decimals(number) {
-        let decimal = number.toFixed(2);
-        return decimal;
+        let num = Number(number);
+        let decimal = num.toFixed(2);
+        return decimal;       
     }
 
     function handleClick(id) {
@@ -162,6 +163,7 @@ const TeamStats = (props) => {
     return (
         <div className='container'>
             <div>
+                <p>{adjOave}</p>
                 {matchUp.map(team => (
                     <div className='matchUp' key={team.id}>                        
                         <p>{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
