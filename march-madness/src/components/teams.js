@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axiosWithAuth from './axiosWithAuth';
-import Stats from './enterStats';
+import EnterStats from './enterStats';
 import TeamStats from './teamStats';
 
 const Teams = () => {
@@ -72,7 +72,7 @@ const Teams = () => {
     return (
         <div className='container'>
             <div>
-            <p>Average Points/Game: {avePoints}</p>
+                <p>Average Points/Game: {avePoints}</p>
                 {list.map(team => (
                     <div key={team.id}>
                         <div>
@@ -80,7 +80,7 @@ const Teams = () => {
                             <p className='team teamName'>{team.name}({team.wins}-{team.loses})</p>
                         </div>
                         <div style={{display: toggle && teamId === team.id ? 'block' : 'none'}}>
-                            <Stats click={handleClick} name={team.name} setCount={setCount} count={count}/>
+                            <EnterStats click={handleClick} name={team.name} setCount={setCount} count={count}/>
                         </div>
                     </div>
                 ))}
