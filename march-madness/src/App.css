@@ -1,6 +1,4 @@
-.App {
-
-}
+/* teams */
 .container {
   display: flex;
   justify-content: space-around;
@@ -9,22 +7,32 @@
   display: inline-block;
   margin-left: 10px;
 }
-.delete{
-  color: white;
-  background: red;
-  border: 1 black solid;
-}
+/* enterStats */
 .input {
   margin-left: 10px;
+}
+/* teamStats */
+.teamsContainer {
+  width: 500px;
 }
 .matchUp {
   text-align: center;
 }
 .buttonCont {
+  display: flex;
+  justify-content: space-around;
   border-bottom: 2px white solid;
 }
 .submit {
-  margin: 10px 150px;
+  margin: 20px 0;
+}
+.searchBar {
+  margin: 10px;
+}
+.delete{
+  color: white;
+  background: red;
+  border: 1 black solid;
 }
 .gamesCont {
   margin-left: 20px;
