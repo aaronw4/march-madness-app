@@ -176,15 +176,20 @@ const TeamStats = (props) => {
 
     return (
         <div className='container'>
-            <div>
+            <div className='teamsCont'> 
                 <p>{adjOave}</p>
                 {matchUp.map(team => (
                     <div className='matchUp' key={team.id}>                        
                         <p>{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
                     </div>
                 ))}
-                {matchUp.length === 2 ? <div className='buttonCont'><button className='submit' onClick={() => calculateOdds()}>Submit</button></div> : null}
-                <form>
+                {matchUp.length === 2 ? 
+                    <div className='buttonCont'>
+                        <button className='submit' onClick={() => calculateOdds()}>Submit</button>
+                        <button className='submit' onClick={() => setMatchUp([])}>Cancel</button>
+                    </div> 
+                    : null}
+                <form className='searchBar'>
                     <input
                         id='team'
                         type='text'
