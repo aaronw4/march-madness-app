@@ -72,6 +72,7 @@ const Teams = () => {
     return (
         <div className='container'>
             <div>
+                <h1>NCAABB Teams</h1>
                 <p>Average Points/Game: {avePoints}</p>
                 {list.map(team => (
                     <div key={team.id}>

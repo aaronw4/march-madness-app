@@ -177,7 +177,8 @@ const TeamStats = (props) => {
     return (
         <div className='container'>
             <div className='teamsCont'> 
-                <p>{adjOave}</p>
+                <h1>Team Stats</h1>
+                <p>Average Adjusted Offense: {adjOave}</p>
                 {matchUp.map(team => (
                     <div className='matchUp' key={team.id}>                        
                         <p>{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
@@ -208,6 +209,7 @@ const TeamStats = (props) => {
                 ))}
             </div>
             <div className='gamesCont'>
+                <h1>Game Predictions</h1>
                 {games.map(game => (
                     toggle === false && gameId === game.id ?  
                     <div>
