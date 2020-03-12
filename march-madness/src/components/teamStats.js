@@ -4,6 +4,8 @@ import axios from 'axios';
 const TeamStats = (props) => {
     const [teams, setTeams] = useState([]);
     const [orderedTeams, setOrderedTeams] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
     const [matchUp, setMatchUp] = useState([]);
     const [games, setGames] = useState([]);
     const [adjOave, setAdjOave] = useState();
@@ -47,9 +49,21 @@ const TeamStats = (props) => {
             });
 
             setOrderedTeams(orderedList);
+            setSearchResults(orderedList);
         }
         newList();
     },[teams]);
+
+    useEffect(() => {
+        const results = orderedTeams.filter(team => 
+            team.TeamName.includes(searchTerm)    
+        );
+        setSearchResults(results)
+    },[searchTerm]);
+
+    const handleChange = e => {
+        setSearchTerm(e.target.value);
+    };
 
     useEffect(() => {
         function fetchData() {
@@ -170,7 +184,17 @@ const TeamStats = (props) => {
                     </div>
                 ))}
                 {matchUp.length === 2 ? <div className='buttonCont'><button className='submit' onClick={() => calculateOdds()}>Submit</button></div> : null}
-                {orderedTeams.map(team => (
+                <form>
+                    <input
+                        id='team'
+                        type='text'
+                        name='textfield'
+                        placeholder='Search'
+                        value={searchTerm}
+                        onChange={handleChange}
+                    />
+                </form>
+                {searchResults.map(team => (
                     <div key={team.id}>
                         <button className='team'  onClick={() => addTeam(team)}>Select</button>
                         <p className='team' >{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
