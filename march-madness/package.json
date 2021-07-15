@@ -19,6 +19,7 @@
     "react-dev-utils": "^11.0.4",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0",
+    "serialize-javascript": "^6.0.0",
     "sockjs": "^0.3.21",
     "ssri": "^8.0.1",
     "ws": "^7.5.3",
