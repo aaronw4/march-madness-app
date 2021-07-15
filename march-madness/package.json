@@ -24,6 +24,7 @@
     "serialize-javascript": "^6.0.0",
     "sockjs": "^0.3.21",
     "ssri": "^8.0.1",
+    "terser-webpack-plugin": "^5.1.4",
     "ws": "^7.5.3",
     "yargs-parser": "^20.2.9"
   },
