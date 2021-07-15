@@ -21,7 +21,8 @@
     "react-scripts": "3.4.0",
     "sockjs": "^0.3.21",
     "ssri": "^8.0.1",
-    "ws": "^7.5.3"
+    "ws": "^7.5.3",
+    "yargs-parser": "^20.2.9"
   },
   "scripts": {
     "start": "react-scripts start",
