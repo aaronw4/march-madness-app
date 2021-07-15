@@ -12,7 +12,7 @@
     "lodash": "^4.17.21",
     "node-notifier": "^9.0.0",
     "object-path": "^0.11.5",
-    "postcss": "^8.2.15",
+    "postcss": "^8.3.5",
     "react": "^16.13.0",
     "react-dev-utils": "^11.0.4",
     "react-dom": "^16.13.0",
