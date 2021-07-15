@@ -5120,6 +5120,13 @@ glob-parent@^5.0.0, glob-parent@^5.1.0, glob-parent@~5.1.0:
   dependencies:
     is-glob "^4.0.1"
 
+glob-parent@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-6.0.0.tgz#f851b59b388e788f3a44d63fab50382b2859c33c"
+  integrity sha512-Hdd4287VEJcZXUwv1l8a+vXC1GjOQqXe+VS30w/ypihpcnu9M1n3xeYeJu5CBpeEQj2nAab2xxz28GuA3vp4Ww==
+  dependencies:
+    is-glob "^4.0.1"
+
 glob-to-regexp@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.3.0.tgz#8c5a1494d2066c570cc3bfe4496175acc4d502ab"
