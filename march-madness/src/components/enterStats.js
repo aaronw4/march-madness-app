@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 const Stats = (props) => {
-    const [name, setName] = useState();
+    const [setName] = useState();
     const [adjO, setAdjO] = useState();
     const [adjD, setAdjD] = useState();
     const [adjT, setAdjT] = useState();
@@ -27,7 +27,8 @@ const Stats = (props) => {
         e.preventDefault();
 
         axios
-            .post('https://arw-march-madness.herokuapp.com/teams', {
+            // .post('https://arw-march-madness.herokuapp.com/teams', {
+            .post('http://localhost:4000/teams', {
                 TeamName: props.name,
                 AdjO: adjO,
                 AdjD: adjD,
