@@ -14,7 +14,7 @@ const Teams = () => {
     useEffect(() => {
         function fetchData() {
             axiosWithAuth()
-                .get('/standings?league=116&season=2020-2021')
+                .get('/standings?league=116&season=2023-2024')
                 .then(res => {
                     console.log(res);
                     setTeams(res.data.response[0])
