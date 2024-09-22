@@ -17,7 +17,8 @@ const TeamStats = (props) => {
     useEffect(() => {
         function fetchData() {
             axios
-                .get('https://arw-march-madness.herokuapp.com/teams')
+                // .get('https://arw-march-madness.herokuapp.com/teams')
+                .get('http://localhost:4000/teams')
                 .then(res => {
                     setTeams(res.data);
                 })
@@ -59,7 +60,7 @@ const TeamStats = (props) => {
             team.TeamName.includes(searchTerm)    
         );
         setSearchResults(results)
-    },[searchTerm]);
+    },[searchTerm, orderedTeams]);
 
     const handleChange = e => {
         setSearchTerm(e.target.value);
@@ -68,7 +69,7 @@ const TeamStats = (props) => {
     useEffect(() => {
         function fetchData() {
             axios
-                .get('https://arw-march-madness.herokuapp.com/matchups')
+                .get('http://localhost:4000/matchups')
                 .then(res => {
                     setGames(res.data);
                 })
@@ -98,9 +99,8 @@ const TeamStats = (props) => {
 
     function deleteTeam(id) {        
         axios
-            .delete(`https://arw-march-madness.herokuapp.com/teams/${id}`)
+            .delete(`http://localhost:4000/teams/${id}`)
             .then(res => {
-                console.log(res);
                 props.setCount(props.count + 1);
             })
             .catch(err => console.log(err));        
@@ -125,13 +125,14 @@ const TeamStats = (props) => {
             const odds2 = 100*((pyth2-pyth1*pyth2)/(pyth1+pyth2-2*pyth1*pyth2));
 
             const possPerGame = AdjT1 * AdjT2 / adjTAve;
-            const score1 = AdjO1 * AdjD2 * possPerGame / adjOave / 100;
-            const score2 = AdjO2 * AdjD1 * possPerGame / adjOave / 100;
+            const score1 = AdjO1 * AdjD2 * possPerGame / 106.1 / 100;
+            console.log(AdjO1, AdjD2, possPerGame, adjOave, 106.1)
+            const score2 = AdjO2 * AdjD1 * possPerGame / 106.1 / 100;
             const spread = score1 - score2;
             const total = score1 + score2;
 
             axios
-                .post('https://arw-march-madness.herokuapp.com/matchups', {
+                .post('http://localhost:4000/matchups', {
                     TeamName1: name1,
                     TeamName2: name2,
                     Pyth1: pyth1,
@@ -144,7 +145,6 @@ const TeamStats = (props) => {
                     Total: total
                 })
                 .then(res => {
-                    console.log(res);
                     setUpdate(update + 1);
                 })
                 .catch(err => console.log(err));        
@@ -155,9 +155,8 @@ const TeamStats = (props) => {
 
     function deleteMatchup(id) {
         axios
-            .delete(`https://arw-march-madness.herokuapp.com/matchups/${id}`)
+            .delete(`http://localhost:4000/matchups/${id}`)
             .then(res => {
-                console.log(res);
                 setUpdate(update + 1);
             })
             .catch(err => console.log(err)); 
