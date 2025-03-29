@@ -34,7 +34,8 @@ const TeamStats = (props) => {
                 TeamName: team.TeamName,
                 AdjO: team.AdjO,
                 AdjD: team.AdjD,
-                AdjT: team.AdjT
+                AdjT: team.AdjT,
+                SOS: team.SOS
             }));
 
             let orderedList = list.sort(function(a,b) {
@@ -113,10 +114,12 @@ const TeamStats = (props) => {
             const AdjO1 = matchUp[0].AdjO;
             const AdjD1 = matchUp[0].AdjD;
             const AdjT1 = matchUp[0].AdjT;
+            const SOS1 = matchUp[0].SOS;
             const name2 = matchUp[1].TeamName;
             const AdjO2 = matchUp[1].AdjO;
             const AdjD2 = matchUp[1].AdjD;
             const AdjT2 = matchUp[1].AdjT;
+            const SOS2 = matchUp[1].SOS;
             
             const pyth1 = Math.pow(AdjO1, 10.25)/(Math.pow(AdjO1, 10.25) + Math.pow(AdjD1, 10.25));
             const pyth2 = Math.pow(AdjO2, 10.25)/(Math.pow(AdjO2, 10.25) + Math.pow(AdjD2, 10.25));
@@ -126,10 +129,13 @@ const TeamStats = (props) => {
 
             const possPerGame = AdjT1 * AdjT2 / adjTAve;
             const score1 = AdjO1 * AdjD2 * possPerGame / 106.1 / 100;
-            console.log(AdjO1, AdjD2, possPerGame, adjOave, 106.1)
+            const sosScore1 = (AdjO1 + SOS1) * AdjD2 * possPerGame / 106.1 / 100;
             const score2 = AdjO2 * AdjD1 * possPerGame / 106.1 / 100;
+            const sosScore2 = (AdjO2 + SOS2) * AdjD1 * possPerGame / 106.1 / 100;
             const spread = score1 - score2;
+            const sosSpread = sosScore1 - sosScore2;
             const total = score1 + score2;
+            const sosTotal = sosScore1 + sosScore2;
 
             axios
                 .post('http://localhost:4000/matchups', {
@@ -141,8 +147,12 @@ const TeamStats = (props) => {
                     Odds2: odds2,
                     Score1: score1,
                     Score2: score2,
+                    SosScore1: sosScore1,
+                    SosScore2: sosScore2,
                     Spread: spread,
-                    Total: total
+                    SosSpread: sosSpread,
+                    Total: total,
+                    SosTotal: sosTotal
                 })
                 .then(res => {
                     setUpdate(update + 1);
@@ -180,7 +190,7 @@ const TeamStats = (props) => {
                 <p>Average Adjusted Offense: {adjOave}</p>
                 {matchUp.map(team => (
                     <div className='matchUp' key={team.id}>                        
-                        <p>{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
+                        <p>{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT} SOS: {team.SOS}</p>
                     </div>
                 ))}
                 {matchUp.length === 2 ? 
@@ -202,7 +212,7 @@ const TeamStats = (props) => {
                 {searchResults.map(team => (
                     <div key={team.id}>
                         <button className='team'  onClick={() => addTeam(team)}>Select</button>
-                        <p className='team' >{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT}</p>
+                        <p className='team' >{team.TeamName} AdjO: {team.AdjO} AdjD: {team.AdjD} AdjT: {team.AdjT} SOS: {team.SOS}</p>
                         <button className='team delete' onClick={() => deleteTeam(team.id)}>X</button>
                     </div>
                 ))}
@@ -212,6 +222,7 @@ const TeamStats = (props) => {
                 {games.map(game => (
                     toggle === false && gameId === game.id ?  
                     <div>
+                        {console.log(games)}
                         <button className='delete deleteMatchup' onClick={() => deleteMatchup(game.id)}>X</button>
                         <table key={game.id}> 
                                 <button onClick={() => handleClick(game.id)}>Close</button>
@@ -236,8 +247,17 @@ const TeamStats = (props) => {
                                 <td colSpan='2'>{decimals(game.Score2)}</td>
                             </tr>
                             <tr>
+                                <th colSpan='2'>SOS Score</th>
+                                <td colSpan='2'>{decimals(game.SosScore1)}</td>
+                                <td colSpan='2'>{decimals(game.SosScore2)}</td>
+                            </tr>
+                            <tr>
                                 <td colSpan='3'>Spread: {decimals(game.Spread)}</td>
                                 <td colSpan='3'>Total: {decimals(game.Total)}</td>
+                            </tr>
+                            <tr>
+                                <td colSpan='3'>SOS Spread: {decimals(game.SosSpread)}</td>
+                                <td colSpan='3'>SOS Total: {decimals(game.SosTotal)}</td>
                             </tr>
                         </table>
                     </div>
