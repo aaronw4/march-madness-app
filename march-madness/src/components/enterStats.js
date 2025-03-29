@@ -6,6 +6,7 @@ const Stats = (props) => {
     const [adjO, setAdjO] = useState();
     const [adjD, setAdjD] = useState();
     const [adjT, setAdjT] = useState();
+    const [sos, setSOS] = useState();
 
     const handleName = e => {
         setName(e.target.value);
@@ -23,6 +24,10 @@ const Stats = (props) => {
         setAdjT(e.target.value);
     }
 
+    const handleSOS = e => {
+        setSOS(e.target.value);
+    }
+
     const submitData = e => {
         e.preventDefault();
 
@@ -32,7 +37,8 @@ const Stats = (props) => {
                 TeamName: props.name,
                 AdjO: adjO,
                 AdjD: adjD,
-                AdjT: adjT
+                AdjT: adjT,
+                SOS: sos
             })
             .then(res => {
                 console.log(res);
@@ -63,8 +69,6 @@ const Stats = (props) => {
                         onChange={handleAdjO}
                         className='input'
                     />
-                </div>
-                <div>
                     <input
                         type='number'
                         step='0.1'
@@ -74,6 +78,8 @@ const Stats = (props) => {
                         onChange={handleAdjD}
                         className='input'
                     />
+                </div>
+                <div>
                     <input
                         type='number'
                         step='0.1'
@@ -81,6 +87,15 @@ const Stats = (props) => {
                         placeholder='AdjT'
                         value={adjT}
                         onChange={handleAdjT}
+                        className='input'
+                    />
+                    <input
+                        type='number'
+                        step='0.1'
+                        name='sos'
+                        placeholder='SOS'
+                        value={sos}
+                        onChange={handleSOS}
                         className='input'
                     />
                     <button>Submit</button>
