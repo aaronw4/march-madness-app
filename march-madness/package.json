@@ -29,7 +29,7 @@
     "react-dom": "^16.13.0",
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.0",
-    "serialize-javascript": "^6.0.0",
+    "serialize-javascript": "^7.0.3",
     "sockjs": "^0.3.24",
     "ssri": "^8.0.1",
     "terser-webpack-plugin": "^5.1.4",
