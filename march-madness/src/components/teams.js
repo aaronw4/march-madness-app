@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axiosWithAuth from './axiosWithAuth';
 import EnterStats from './enterStats';
 import TeamStats from './teamStats';
+import CsvUploader from './enterCSVstats';
 
 const Teams = () => {
     const [teams, setTeams] = useState([]);
@@ -11,18 +12,18 @@ const Teams = () => {
     const [avePoints, setAvePoints] = useState();
     const [count, setCount] = useState(0);
 
-    useEffect(() => {
-        function fetchData() {
-            axiosWithAuth()
-                .get('/standings?league=116&season=2023-2024')
-                .then(res => {
-                    console.log(res);
-                    setTeams(res.data.response[0])
-                })
-                .catch(err => console.log(err))
-        }
-        fetchData();        
-    },[]);
+    // useEffect(() => {
+    //     function fetchData() {
+    //         axiosWithAuth()
+    //             .get('/standings?league=116&season=2025-2026')
+    //             .then(res => {
+    //                 console.log(res);
+    //                 setTeams(res.data.response[0])
+    //             })
+    //             .catch(err => console.log(err))
+    //     }
+    //     fetchData();        
+    // },[]);
 
     useEffect(() => {
         function total() {
@@ -74,6 +75,9 @@ const Teams = () => {
             <div>
                 <h1>NCAABB Teams</h1>
                 <p>Average Points/Game: {avePoints}</p>
+                <div>
+                    <CsvUploader/>
+                </div>
                 {list.map(team => (
                     <div key={team.id}>
                         <div>
@@ -81,7 +85,7 @@ const Teams = () => {
                             <p className='team teamName'>{team.name}({team.wins}-{team.loses})</p>
                         </div>
                         <div style={{display: toggle && teamId === team.id ? 'block' : 'none'}}>
-                            <EnterStats click={handleClick} name={team.name} setCount={setCount} count={count}/>
+                            <EnterStats click={handleClick} name={team.name} setCount={setCount} count={count}/>  
                         </div>
                     </div>
                 ))}
