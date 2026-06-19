@@ -34,7 +34,7 @@
     "sockjs": "^0.3.24",
     "ssri": "^8.0.1",
     "terser-webpack-plugin": "^5.1.4",
-    "ws": "^7.5.3",
+    "ws": "^7.5.11",
     "yargs-parser": "^21.0.0"
   },
   "scripts": {
