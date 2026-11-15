@@ -19,7 +19,7 @@
     "json-schema": "^0.4.0",
     "lodash": "^4.18.1",
     "multicast-dns": "^7.2.3",
-    "node-forge": "^1.4.0",
+    "node-forge": "^1.4.3",
     "node-notifier": "^10.0.0",
     "nth-check": "^2.0.1",
     "object-path": "^0.11.8",
